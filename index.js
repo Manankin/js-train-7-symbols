@@ -1,274 +1,193 @@
-//Завдання 1.Cтворіть об'єкт person за допомогою конструктора з полями name: "John",age: 25
-let person = {name: 'John', age: 25};
-
+//Завдання 1: Функція для створення символу
+function createSymbol() {
+  // Повернемо символ без опису
+  return Symbol();
+}
 console.log("Завдання 1 ====================================");
+console.log(createSymbol()); // Виведе Symbol()
 
-console.log("person", person); // Виведе {name: "John", age: 25}
+
+//Завдання 2: Функція для створення символу з описом та виведення опису
+function createSymbolWithDescription(property) {
+  // Створюємо символ symbol з описом property
+  const symbol = Symbol(property);
+  //Повертаємо опис символа symbol
+  return symbol.description;
+}
+console.log("Завдання 2 ====================================");
+console.log(createSymbolWithDescription("My symbol")); // Виведе My symbol
 
 
-//Завдання 2. Cтворіть об'єкт personLarge який буде мати такі ж поля як person ,
-// та вкладений об'єкт address з полями  street: "123 Main St", city: "New York", country: "USA",
-let personLarge = {
-  //використовуємо деструктурізацію на об'єкті person
-  ...person,
-  //створюємо об'єкт address
-  address: {
-    street: '123 Main St',
-    city: 'New York',
-    country: 'USA'
+// Завдання 3: Створення властивостей об'єкту з використанням Symbol
+// В даному завданні ми створимо властивість об'єкту, ключ якої буде символом.
+
+// Створимо функцію, яка створює об'єкт з властивістю, ключ якої є символом
+function createSymbolProperty(property) {
+  // Створимо змінну sym яка дорівнює символу без опису
+  const sym = Symbol();
+  // Створимо пустий об'єкт
+  const obj = {};
+  // Додамо властивість до об'єкту, ключем якої буде наш символ, а значенням буде аргумент property
+  obj[sym] = property;
+  // Повертаємо об'єкт
+  return obj;
+}
+console.log("Завдання 3 ====================================");
+console.log(
+  createSymbolProperty("Це властивість об'єкту з використанням символу")
+); //Виведе { [Symbol()]: "Це властивість об'єкту з використанням символу" }
+
+
+// Завдання 4. Перевіримо чи є символи унікальними
+// Функція для створення двох символів з однаковим описом та порівнянням
+function createAndCompareTwoSymbols(value) {
+  // Створюємо два символи з однаковим описом value, та повертаємо результат порівняння двох символів
+  const sym1 = Symbol(value);
+  const sym2 = Symbol(value);
+  return (sym1 === sym2);
+}
+console.log("Завдання 4 ====================================");
+console.log(createAndCompareTwoSymbols("My Symbol")); // Виведе false
+
+
+// Завдання 5: Створення символу з використанням Symbol.for()
+// Функція createSymbolForKey створює новий символ за допомогою Symbol.for() та повертає його
+function createSymbolForKey(key) {
+  // Використовуємо Symbol.for() для створення нового символу symbol зі значенням key
+  const symbol = Symbol.for(key);
+  // Symbol.for() шукає символ в глобальному реєстру символів. Якщо символ з таким ключем вже існує, він повертає його, в іншому випадку створює новий символ з даним ключем та додає його в реєстр
+  // Повертаємо створений символ
+  return symbol;
+}
+// Функція compareSymbolsForKey порівнює два символи за допомогою оператора '==='
+function compareSymbolsForKey(symbol1, symbol2) {
+  // Використовуємо оператор '===' для порівняння двох символів
+  // Якщо два символи однакові, він поверне true, в іншому випадку - false
+  return (symbol1 === symbol2);
+}
+console.log("Завдання 5 ====================================");
+let symbol5 = createSymbolForKey("myKey"); // Створюємо новий символ
+let symbol6 = createSymbolForKey("myKey"); // Створюємо новий символ
+console.log(compareSymbolsForKey(symbol5, symbol6)); //Виведе: true
+
+
+// Завдання 6: Використання Symbol.keyFor(sym)
+// Функція getSymbolKey приймає символ як аргумент та повертає ключ, який був використаний для його створення
+function getSymbolKey(symbol) {
+  // Використовуємо Symbol.keyFor(sym) для отримання ключа, який був використаний для створення символу та повертаємо його
+  return Symbol.keyFor(symbol);
+}
+console.log("Завдання 6 ====================================");
+let symbolForKey = Symbol.for("myKey"); // Створюємо новий символ або отримуємо існуючий з глобального реєстру символів
+console.log(getSymbolKey(symbolForKey)); // Виводимо ключ символу. Виведе: myKey
+
+
+// Завдання 7: Використання Symbol.toString
+function useSymbolToStringTag() {
+  // Створюємо пустий об'єкт myObject.
+  const myObject = {};
+  // Встановлюємо властивість Symbol об'єкту myObject на значення "CustomObject".
+  myObject[Symbol] = "CustomObject";
+  // const newKey = Symbol("CustomObject")
+  // myObject.newKey = "";
+  // Повертаємо рядкове представлення myObject[Symbol].
+  return (myObject[Symbol].toString());
+}
+console.log("Завдання 7 ====================================");
+console.log(useSymbolToStringTag()); //Виведе CustomObject
+
+
+// Завдання 8: Використання Symbol.description
+// Функція useSymbolDescription використовує властивість Symbol.description для отримання опису символу.
+function useSymbolDescription() {
+  // Створюємо символ mySymbol зі значенням "mySymbol".
+  const mySymbol = Symbol('mySymbol');
+  // Отримуємо опис символу mySymbol в змінну symbolDescription за допомогою властивості description.
+  let symbolDescription = mySymbol.description
+  // Повертаємо symbolDescription
+  return symbolDescription;
+}
+console.log("Завдання 8 ====================================");
+console.log(useSymbolDescription()); //Виведе mySymbol
+
+
+// Завдання 9: Використання Symbol.iterator
+// Об'єкт "myObject" представляє значення   from: 1, to: 7, які можна перебрати
+let rangeObject = {
+  from: 1,
+  to: 7,
+  // Використовуємо Symbol.iterator для створення ітератора всередині об'єкта "myObject"
+  [Symbol.iterator]() {
+    // this.current присвоюємо this.from
+    this.current = this.from;
+    // Повертаємо this
+    return this
+  },
+  // Створюємо метод "next" який визначає поведінку при кожній ітерації
+  next() {
+    // Використовуйте if, якщо current менше to, повертаємо об'єкт з властивістю "value",що містить поточне значення ,
+    if (this.current < this.to) {
+      // та не забуваємо збільшити індекс за допомогою інкремент, і "done" - false, означаючи, що ітерація ще не закінчена
+      return { done: false, value: this.current++ };
+    } else {
+      // Якщо індекс вийшов за межі масиву ключів, повертаємо об'єкт з властивістю "done" - true, означаючи, що ітерація закінчена
+      return { done: true, }
+    };
   }
 };
 
-console.log("Завдання 2 ====================================");
-console.log("personLarge", personLarge); // Виведе
-// personLarge {
-//   name: 'John',
-//   age: 25,
-//   address: { street: '123 Main St', city: 'New York', country: 'USA' }
-// }
-
-
-//Завдання 3: Створіть функцію, що повертає новий об'єкт з тими ж властивостями, що й переданий у якості аргумента об'єкт.
-
-var animal = {
-  type: "Dog",
-  breed: "Labrador Retriever",
-};
-
-// Функція для створення нового об'єкта з тими ж властивостями
-function copyObject(obj) {
-  // Використовуємо синтаксис деструктурізації {...person} для створення нового об'єкта з тими ж властивостями
-  let newObj = { ...obj };
-  // Повертаємо новий об'єкт
-  return newObj;
+// Функція "useSymbolIterator" використовує ітератор для отримання значень об'єкта
+function useSymbolIterator(obj) {
+  let result = new Array();
+  // Проходимо крізь елементи об'єкта obj, використовуючи цикл "for...of"
+  for (let num of obj) {
+    // Додаємо кожне значення до масиву "result"
+    result = [...result, num];
+  }
+  // Повертаємо масив зі значеннями
+  return result;
 }
+console.log("Завдання 9 ====================================");
+console.log(useSymbolIterator(rangeObject)); //Виведе [ 1, 2, 3, 4, 5, 6 ]
 
-console.log("Завдання 3 ====================================");
-console.log("copyObject(animal)", copyObject(animal)); // Виведе { type: 'Dog', breed: 'Labrador Retriever' }
 
+// Завдання 10: Використання Symbol.iterator
 
-////Завдання 4. Перевірте наявність властивості в об'єкті за допомогою оператора in.
-let fruit = {
-  name: "Banana",
-  color: "Yellow",
-};
-// Функція для перевірки наявності властивості в об'єкті
-function hasProperty(obj, property) {
-  // Використовуємо оператор "in" для перевірки наявності властивості
-  for (const keyField in obj) {
-  // Запишимо умову якщо властивість існує повертає текст Property ${property} exists,
-    if (keyField === property) {
-    return `Property ${property} exists`
-  } else return `Property ${property} does not exist`
+// Оголошення об'єкта "myObject" з властивістю "category"
+let myObject = {
+  //Cтворюємо масив category
+  category: [
+    { id: 1, name: "apple" }, // Об'єкт категорії з ідентифікатором 1 та назвою "apple"
+    { id: 2, name: "banana" }, // Об'єкт категорії з ідентифікатором 2 та назвою "banana"
+    { id: 3, name: "orange" }, // Об'єкт категорії з ідентифікатором 3 та назвою "orange"
+    { id: 4, name: "grape" }, // Об'єкт категорії з ідентифікатором 4 та назвою "grape"
+    { id: 5, name: "mango" }, // Об'єкт категорії з ідентифікатором 5 та назвою "mango"
+  ],
+  //Створюємо властивість currentIndex зі значенням 0, яка буде нашим лічильником в ітерації
+  currentIndex: 0,
+  // Оголошення методу Symbol.iterator для об'єкта "myObject"
+  [Symbol.iterator]() {
+    // Повертаємо this
+    return this
+  },
+
+  // Оголошення методу "next" для ітерації
+  next() {
+    // Створюємо логічний оператор який буде перевіряти чи властивість об'єкту currentIndex менша ніж довжина масиву category
+    if (this.currentIndex < this.category.length) {
+      //Створюємо змінну value якій присвоємо властивість name елемента масиву category з індексом currentIndex
+      let value = this.category[this.currentIndex].name;
+      // Збільшимо currentIndex на одиницю
+      this.currentIndex++;
+      // Повертаємо об'єкт з властивістю value значенням якої буде value,та прапорцем done: false
+      return { done: false, value };
+    } else {
+      //Якщо властивість об'єкту currentIndex більше або дорівнює довжині масиву category повертаємо об'єкт з прапорцем done: true, коли ітерація закінчена
+      return { done: true, }
+    };
   }
   
-  // інашке повертаємо Property ${property} does not exist.
-}
-
-console.log("Завдання 4 ====================================");
-console.log(hasProperty(fruit, "name")); // Виведе "Property name exists."
-console.log(hasProperty(fruit, "taste")); // Виведе "Property taste does not exist."
-
-
-// Завдання 5: Створіть функцію, що отримує об'єкт і виводить на консоль всі його ключі та значення.
-let country = {
-  name: "United States",
-  capital: "Washington, D.C.",
 };
-// Функція для виведення всіх ключів і значень об'єкта
-function printKeysAndValues(obj) {
-  // Проходимося по всіх ключах об'єкту за допомогою циклу "for in"
-  for (const key in obj) {
-  // Виводимо ключ та значення на консоль
-    console.log(`Key: ${key}, Value: ${obj[key]}`);
-  }
-}
-
-console.log("Завдання 5 ====================================");
-printKeysAndValues(country);
-// Виведе
-// Key: name, Value: United States
-// Key: capital, Value: Washington, D.C.
-
-
-// Завдання 6: Видаліть властивість з об'єкта за допомогою оператора delete.
-let movie = {
-  title: "Inception",
-  director: "Christopher Nolan",
-};
-// Функція для видалення властивості з об'єкта
-function deleteProperty(obj, property) {
-  // Використовуємо оператор "delete" для видалення властивості
-  delete obj[property];
-  // Повертаємо об'єкт
-  return obj;
-}
-
-console.log("Завдання 6 ====================================");
-console.log(deleteProperty(movie, "director")); // Виведе { title: 'Inception' }
-
-//Завдання 7: Використайте ключове слово this в об'єкті.
-// Створюємо об'єкт
-let user = {
-  name: "John",
-  age: 25,
-  // Створюємо метод introduce, який за допомогою ключового слова this має повернути такий рядок
-  introduce: function () {
-    return `My name is ${this.name} and I am ${this.age} years old.`
-  } 
-  // My name is John and I am 25 years old.
-};
-
-console.log("Завдання 7 ====================================");
-// Викликаємо метод introduce об'єкта user
-// Розкоментуйте рядок нижче після виконня завдання для перевірки
-console.log(user.introduce());
-// Виведе My name is John and I am 25 years old.
-
-
-// Завдання 8: Створіть функцію, яка додає нове поле до об'єкту.
-let book = {
-  title: "To Kill a Mockingbird",
-  author: "Harper Lee",
-};
-
-// Функція для додавання нового поля до об'єкту
-function addField(obj, newField, value) {
-  // Додаємо нове поле до об'єкту з допомогою квадратних дужок
-  obj[newField] = value;
-  // Повертаємо об'єкт
-  return obj;
-}
-
-console.log("Завдання 8 ====================================");
-console.log(addField(book, "year", 1960)); // Виведе { title: 'To Kill a Mockingbird', author: 'Harper Lee', year: 1960 }
-
-
-// Завдання 9: Деструктуруйте об'єкт в нові змінні.
-let laptop = {
-  brand: "Dell",
-  model: "XPS 13",
-};
-// Функція для деструктуризації об'єкту
-function destructureObject(obj) {
-  // Використовуємо деструктуризацію для створення нових змінних з властивостей об'єкту і отримуємо з нього змінні brand та model
-  let { brand, model } = obj;
-  // Повертаємо нові змінні  в форматі 'Brand: ${brand}, Model: ${model}'
-  return `Brand: ${brand}, Model: ${model}`;
-}
-
-console.log("Завдання 9 ====================================");
-console.log(destructureObject(laptop)); // Виведе Brand: Dell, Model: XPS 13
-
-
-// Завдання 10: Змініть значення полів об'єкту, що знаходяться в масиві об'єктів.
-
-// Створюємо масив об'єктів userList, першим елементом якого буде об'єкт name:"Jack",role:"reader", а другим об'єкт name: "Jane", role: 'admin'
-
-let userList = [
-  { name: "Jack", role: "reader" },
-  { name: "Jane", role: "admin" },
-];
-// Функція для зміни ролі всіх осіб у масиві
-function changeRole(array, newRole) {
-  // Ітеруємося по масиву об'єктів за допомогою циклу "for of"
-  for (const item of array) {
-    // Змінюємо роль кожного користувача на нове ім'я
-    item.role = newRole
-    // Виводимо об'єкт на консоль
-    console.log(item)
-  }
-}
 
 console.log("Завдання 10 ====================================");
-changeRole(userList, "editor");
-// Виведе
-// { name: 'Jack', role: 'editor' }
-// { name: 'Jane', role: 'editor' }
-
-
-// Завдання 11: Використовуйте вкладені об'єкти для зберігання більш складної інформації.
-// Створюємо об'єкт з вкладеним об'єктом
-let product = {
-  productName: "Smartphone",
-  price: 699,
-  manufacturer: {
-    companyName: "Tech Corp",
-    country: "USA",
-  },
-};
-// Функція для виводу деталей людини
-function printProductDetails(obj) {
-  // Використовуємо деструктуризацію для отримання значень productName, price i також значень companyName, country вкладеного об'єкту manufacturer
-  let { productName, price, manufacturer: { companyName, country }
-} = obj;
-  // Виводимо productName, price, companyName та country на консоль
-console.log(productName, price, companyName, country);
-}
-
-console.log("Завдання 11 ====================================");
-printProductDetails(product); // Виведе Smartphone 699 Tech Corp USA
-
-
-// Завдання 12: Показати, що об'єкти будуть дорівнювати один одному лише тоді, коли одному об'єкту присвоїти значення іншого.
-// Створіть об'єкт два об'єкти planet1 та planet2 з полями   name: "Земля",radius: 6371,
-
-let planet1 = { name: "Земля", radius: 6371 };
-let planet2 = { name: "Земля", radius: 6371 };
-
-// Функція для перевірки рівності об'єктів
-function compareObjects(obj1, obj2) {
-  // Виводимо результат порівняння об'єктів
-  console.log(obj1 === obj2);
-  // Присвоємо obj2 значення об'єкту obj1
-  obj2 = obj1;
-  // Виводимо результат порівняння об'єктів
-  console.log(obj1 === obj2);
-}
-
-console.log("Завдання 12 ====================================");
-compareObjects(planet1, planet2); // Виведе
-//false
-//true
-
-
-// Завдання 13: Використовуйте деструктуризацію зі значенням за замовчуванням у аргументах функції для об'єкта.
-let car = {
-  brand: "BMW",
-  year: 2022,
-};
-// Створюємо функцію, яка приймає об'єкт як аргумент і використовує деструктуризацію зі значенням за замовчуванням
-// brand за замовчуванням призначемо Unknown, year за замовчуванням призначемо 0, country за замовчуванням призначемо Unknown
-
-function showCarInfo({
-  brand = "Unknown",
-  year = 0,
-  country = "Unknown",
-} = {}) {
-  // Повертаємо об'єкт зі значеннями властивостей
-  return {
-    brand: brand,
-    year: year,
-    country: country
-  };
-}
-
-console.log("Завдання 13 ====================================");
-console.log(showCarInfo(car)); // Виведе { brand: 'BMW', year: 2022, country: 'Unknown' }
-
-
-// Завдання 14: Додайте нову властивість до вбудованого об'єкту Array через літерал.
-// Створюємо функцію, яка буде додавати нову властивість до масиву
-function addProperty(array) {
-  // Додаємо нову властивість customProperty до прототипу Array зі значенням myProperty
-  Array.prototype.customProperty = "myProperty";
-  // Повертаємо переданий масив з новою властивістю
-  return array;
-}
-
-console.log("Завдання 14 ====================================");
-// Створимо масив newArr з новою властивістю за допомогої нашої функції в яку передамо [1, 2, 3, 4, 5]
-let newArr = [1, 2, 3, 4, 5];
-addProperty(newArr);
-// Розкоментуйте рядок нижче після виконня завдання для перевірки
-console.log(newArr.customProperty); // Виведе myProperty
+console.log(useSymbolIterator(myObject)); //Виведе [ 'apple', 'banana', 'orange', 'grape', 'mango' ]
